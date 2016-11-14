@@ -1,0 +1,21 @@
+{
+  "name": "vue-v2-crud-application",
+  "version": "0.1.0",
+  "description": "vue.js v1 (http://codepen.io/-a/pen/amOYGp) to v2",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "MKuznetcov",
+  "license": "ISC",
+  "dependencies": {
+    "jquery": "^3.1.1",
+    "lodash": "^4.16.6",
+    "vue": "~1.0.5",
+    "vue-router": "~0.7.1",
+    "vue-server-renderer": "^2.0.5"
+  },
+  "devDependencies" : {
+        "vue-migration-helper": "^1.1.1"
+  }
+}
