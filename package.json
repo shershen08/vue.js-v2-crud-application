@@ -1,7 +1,7 @@
 {
   "name": "vue-v2-crud-application",
   "version": "0.1.0",
-  "description": "vue.js v1 (http://codepen.io/-a/pen/amOYGp) to v2",
+  "description": "vue.js v1 (http://codepen.io/-a/pen/amOYGp) to v2 (http://codepen.io/shershen08/pen/xROOxw)",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
