@@ -18,7 +18,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Vue.js CRUD application</title>
+  <title>Vue.js v2 CRUD</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -28,20 +28,19 @@
   <header class="page-header">
     <div class="branding">
       <img src="https://vuejs.org/images/logo.png" alt="Logo" title="Home page" class="logo"/>
-      <h1>Vue.js CRUD application</h1>
+      <h1>Vue.js v2 CRUD</h1>
     </div>
   </header>
-  <main id="app">
-    <router-view></router-view>
-  </main>
+  <main id="app"></main>
 </div>
 
 <template id="product-list">
+  <section>
   <div class="actions">
-    <a class="btn btn-default" v-link="{path: '/add-product'}">
+    <router-link class="btn btn-default" :to="{path: '/add-product'}">
       <span class="glyphicon glyphicon-plus"></span>
       Add product
-    </a>
+    </router-link>
   </div>
   <div class="filters row">
     <div class="form-group col-sm-3">
@@ -59,9 +58,9 @@
     </tr>
     </thead>
     <tbody>
-    <tr v-for="product in products | filterBy searchKey in 'name'">
+    <tr v-for="product in filteredProducts">
       <td>
-        <a v-link="{name: 'product', params: {product_id: product.id}}">{{ product.name }}</a>
+        <router-link :to="{name: 'product', params: {product_id: product.id}}">{{ product.name }}</router-link>
       </td>
       <td>{{ product.description }}</td>
       <td>
@@ -69,15 +68,17 @@
         <span class="glyphicon glyphicon-euro" aria-hidden="true"></span>
       </td>
       <td>
-        <a class="btn btn-warning btn-xs" v-link="{name: 'product-edit', params: {product_id: product.id}}">Edit</a>
-        <a class="btn btn-danger btn-xs" v-link="{name: 'product-delete', params: {product_id: product.id}}">Delete</a>
+        <router-link class="btn btn-warning btn-xs" :to="{name: 'product-edit', params: {product_id: product.id}}">Edit</router-link>
+        <router-link class="btn btn-danger btn-xs" :to="{name: 'product-delete', params: {product_id: product.id}}">Delete</router-link>
       </td>
     </tr>
     </tbody>
   </table>
+  </section>
 </template>
 
 <template id="add-product">
+    <section>
   <h2>Add new product</h2>
   <form v-on:submit="createProduct">
     <div class="form-group">
@@ -93,11 +94,13 @@
       <input type="number" class="form-control" id="add-price" v-model="product.price"/>
     </div>
     <button type="submit" class="btn btn-primary">Create</button>
-    <a v-link="'/'" class="btn btn-default">Cancel</a>
+    <router-link to="'/'" class="btn btn-default">Cancel</router-link>
   </form>
+</section>
 </template>
 
 <template id="product">
+    <section>
   <h2>{{ product.name }}</h2>
   <b>Description: </b>
   <div>{{ product.description }}</div>
@@ -105,10 +108,12 @@
   <div>{{ product.price }}<span class="glyphicon glyphicon-euro"></span></div>
   <br/>
   <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
-  <a v-link="'/'">Backt to product list</a>
+  <router-link to="'/'">Back to product list</router-link>
+</section>
 </template>
 
 <template id="product-edit">
+    <section>
   <h2>Edit product</h2>
   <form v-on:submit="updateProduct">
     <div class="form-group">
@@ -124,17 +129,20 @@
       <input type="number" class="form-control" id="edit-price" v-model="product.price"/>
     </div>
     <button type="submit" class="btn btn-primary">Save</button>
-    <a v-link="'/'" class="btn btn-default">Cancel</a>
+    <router-link to="'/'" class="btn btn-default">Cancel</router-link>
   </form>
+</section>
 </template>
 
 <template id="product-delete">
+    <section>
   <h2>Delete product {{ product.name }}</h2>
   <form v-on:submit="deleteProduct">
     <p>The action cannot be undone.</p>
     <button type="submit" class="btn btn-danger">Delete</button>
-    <a v-link="'/'" class="btn btn-default">Cancel</a>
+    <router-link to="'/'" class="btn btn-default">Cancel</router-link>
   </form>
+</section>
 </template>
 
 </body>

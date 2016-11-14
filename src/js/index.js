@@ -20,7 +20,16 @@ var List = Vue.extend({
   template: '#product-list',
   data: function () {
     return {products: products, searchKey: ''};
+  },
+  computed : {
+    filteredProducts: function () {
+    var self = this;
+    console.log()
+    return self.products.filter(function (product) {
+      return product.name.indexOf(self.searchKey) !== -1
+    })
   }
+}
 });
 
 var Product = Vue.extend({
@@ -37,14 +46,14 @@ var ProductEdit = Vue.extend({
   },
   methods: {
     updateProduct: function () {
-      var product = this.$get('product');
+      var product = this.product;
       products[findProductKey(product.id)] = {
         id: product.id,
         name: product.name,
         description: product.description,
         price: product.price
       };
-      router.go('/');
+      router.push('/');
     }
   }
 });
@@ -57,7 +66,7 @@ var ProductDelete = Vue.extend({
   methods: {
     deleteProduct: function () {
       products.splice(findProductKey(this.$route.params.product_id), 1);
-      router.go('/');
+      router.push('/');
     }
   }
 });
@@ -70,24 +79,28 @@ var AddProduct = Vue.extend({
   },
   methods: {
     createProduct: function() {
-      var product = this.$get('product');
+      var product = this.product;
       products.push({
         id: Math.random().toString().split('.')[1],
         name: product.name,
         description: product.description,
         price: product.price
       });
-      router.go('/');
+      router.push('/');
     }
   }
 });
 
-var router = new VueRouter();
-router.map({
-  '/': {component: List},
-  '/product/:product_id': {component: Product, name: 'product'},
-  '/add-product': {component: AddProduct},
-  '/product/:product_id/edit': {component: ProductEdit, name: 'product-edit'},
-  '/product/:product_id/delete': {component: ProductDelete, name: 'product-delete'}
-})
-  .start(Vue.extend({}), '#app');
+var router = new VueRouter({
+  routes: [{path: '/', component: List},
+    {path: '/product/:product_id', component: Product, name: 'product'},
+    {path: '/add-product', component: AddProduct},
+    {path: '/product/:product_id/edit', component: ProductEdit, name: 'product-edit'},
+  {path:   '/product/:product_id/delete', component: ProductDelete, name: 'product-delete'}
+]});
+
+new Vue({
+  el: '#app',
+  router: router,
+  template: '<router-view></router-view>'
+});
